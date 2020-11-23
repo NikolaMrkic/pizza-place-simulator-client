@@ -1,0 +1,21 @@
+.publc-header{
+    background-color: white;
+}
+
+.bgimg {
+    background-image: url('../../../images/react-widget.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: repeat-y;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 25px;
+  }
+
+  .middle {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
