@@ -23,13 +23,14 @@ export default function AuthExample() {
             <LogIn />
           </Route>
 
+          <PrivateRoute path="/admin">
+            <AdminPage />
+          </PrivateRoute>
+
           <Route path="*">
             <NoFoundPage />
           </Route>
 
-          <PrivateRoute path="/admin">
-            <AdminPage />
-          </PrivateRoute>
 
         </Switch>
       </div>

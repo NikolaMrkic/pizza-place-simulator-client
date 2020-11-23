@@ -19,6 +19,7 @@ export declare class FormStore {
     private initialValues;
     private callbacks;
     private validateMessages;
+    private preserve?;
     private lastValidatePromise;
     constructor(forceRootUpdate: () => void);
     getForm: () => InternalFormInstance;
@@ -31,6 +32,8 @@ export declare class FormStore {
     private getInitialValue;
     private setCallbacks;
     private setValidateMessages;
+    private setPreserve;
+    private timeoutId;
     private warningUnhooked;
     /**
      * Get registered field entities.
@@ -55,6 +58,10 @@ export declare class FormStore {
     private resetFields;
     private setFields;
     private getFields;
+    /**
+     * This only trigger when a field is on constructor to avoid we get initialValue too late
+     */
+    private initEntityValue;
     private registerField;
     private dispatch;
     private notifyObservers;
@@ -65,5 +72,5 @@ export declare class FormStore {
     private validateFields;
     private submit;
 }
-declare function useForm(form?: FormInstance): [FormInstance];
+declare function useForm<Values = any>(form?: FormInstance<Values>): [FormInstance<Values>];
 export default useForm;

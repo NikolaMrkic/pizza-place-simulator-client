@@ -1,6 +1,8 @@
 import { React, Component, Layout, connect, Card, Row, Col, Modal } from "../../global";
 import PublicHeader from "../../components/public/header/PublicHeader";
 import INGREDIENT from "../../redux/actions/public/ingredientAction";
+import OrderForm from "../../components/public/order/form/OrderForm";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 const { Footer, Content } = Layout;
 
@@ -8,23 +10,54 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisibleModal: false
+      isVisibleModal: false,
+      ingredientPizza: "",
+      pizzaName: "",
+      pizzaTime: "",
+      pizzaPrice: ""
     };
-
   }
+
+  clear = () => {
+
+  };
+
+
+  createTimeToMakePizza = (time) => {
+    let seconds = time / 1000.0;
+    let decPart = (seconds + "").split(".")[1];
+    return decPart
+  };
 
 
   openIngredientCard = (data) => {
     console.log('dataaaaaaaaaa', data);
+    let millisec = data.time;
+    let seconds = millisec / 1000.0;
+    console.log('seconds', seconds);
+    //proslediti sekunde za izradu pice
+    let decPart = (seconds + "").split(".")[1];
+
     this.setState({
-      isVisibleModal: true
+      isVisibleModal: true,
+      ingredientPizza: data,
+      pizzaName: data.name,
+      pizzaTime: decPart,
+      pizzaPrice: data.price
+
     })
   };
 
+  closeIngredientCard = () => {
+    this.setState({
+      isVisibleModal: false
+    })
+
+  };
 
   render() {
     if (this.props.ingredient) {
-      const { current, setCurrent, isVisibleModal } = this.state;
+      const { isVisibleModal, ingredientPizza, pizzaName, pizzaTime, pizzaPrice } = this.state;
       return (
         <div >
           <Layout>
@@ -38,30 +71,36 @@ class HomePage extends Component {
               }}
             >
               <Card title="Place the ingredients on the pizza."  >
-                <Row>
+                <Row style={{
+                  padding: "3rem",
+
+                }}>
                   {this.props.ingredient.map((data, index) => {
                     return (
                       <Col span={6} key={index} type="primary" >
-                        <Card title={data.name} hoverable={true} onClick={() => this.openIngredientCard(data)} >
-                          <p>Price : {data.price}</p>
-                          <p>Time to make pizza : {data.time}</p>
+                        <Card title={data.name.toUpperCase()} hoverable={true} onClick={() => this.openIngredientCard(data)} >
+                          <p>Price : {data.price + " $"}</p>
+                          <p>Time to make pizza : {this.createTimeToMakePizza(data.time) + " min"} </p>
                         </Card>
                       </Col>
                     );
                   })}
                 </Row>
               </Card>
-
             </Content>
 
             <Modal
-              title="modall"
+              style={{
+                textAlign: "center",
+              }}
+              title={"Pizza to order " + pizzaName + " | Time to make: " + pizzaTime + "min" + " | Price : " + pizzaPrice + "$"}
               visible={isVisibleModal}
-              // onCancel={resetForm}
-              width={600}
+              width={550}
               footer={false}
+              centered={true}
+              closable={false}
             >
-              {/* <UserForm initialValues={useUser} editableForm={isDataForEdit} /> */}
+              <OrderForm initalValues={ingredientPizza} closeIngredientCard={this.closeIngredientCard} />
             </Modal>
 
             <Footer style={{ textAlign: "center" }}>
@@ -71,8 +110,9 @@ class HomePage extends Component {
         </div>
       );
     } else {
-      return (<div>
-      </div>)
+      return (
+        <div></div>
+      )
     }
 
   }
@@ -94,7 +134,7 @@ const mapStateToProps = (state) => {
 // anything returned from this function will end up as props
 function mapDispatchToProps(dispatch) {
   return {
-    getIngredient: dispatch(INGREDIENT.request())
+    getIngredient: dispatch(INGREDIENT.request()),
   };
 }
 
