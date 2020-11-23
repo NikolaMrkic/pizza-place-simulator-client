@@ -70,9 +70,9 @@ class HomePage extends Component {
                 backgroundColor: "#eeeff1",
               }}
             >
-              <Card title="Place the ingredients on the pizza."  >
+              <Card title="Place the ingredients on the pizza." size="small" >
                 <Row style={{
-                  padding: "3rem",
+                  padding: "0.5rem",
 
                 }}>
                   {this.props.ingredient.map((data, index) => {
