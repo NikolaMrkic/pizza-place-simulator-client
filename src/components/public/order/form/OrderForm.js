@@ -4,73 +4,99 @@ import {
     reduxForm,
     useDispatch,
     Button,
-    useHistory,
+    useState,
+    // useHistory,
 } from "../../../../global";
+import { Alert } from 'antd';
+import { Divider } from 'antd';
 import { renderInput } from "../form-component/index";
-import USER_ADMIN from "../../../../redux/actions/admin/userAction/index";
-
+import ORDER from "../../../../redux/actions/public/ordersAction/index"
 let OrderForm = (props) => {
-    const dispatch = useDispatch();
-    let history = useHistory();
-    console.log("props sa ordera", props);
+    console.log('props sa forme', props);
+    const [visible, setVisible] = useState(false);
+    const [initalValues, setinitalValues] = useState({});
 
+    const dispatch = useDispatch();
+    // let history = useHistory();
+    // console.log("props sa ordera", props);
     const onSubmitForm = (values) => {
         const order = { ...props.initalValues, ...values }
-        console.log("order sa forme", order);
-        // props.clearFields()
+        setinitalValues(order);
+        setVisible(true)
+        setTimeout(() => {
+            dispatch(ORDER.save(order));
+            props.closeIngredientCard()
+            props.reset()
+            setVisible(false);
+        }, order.time)
+
+    };
+
+    const handleClose = () => {
+        setVisible(false);
     };
 
 
-    const { handleSubmit, reset } = props;
+    const { handleSubmit } = props;
 
     return (
-        <form onSubmit={handleSubmit(onSubmitForm)}>
+        <div>
             <div>
-                <div>
-                    <Field
-                        label="First Name"
-                        name="firstName"
-                        component={renderInput}
-                        type="text"
-                        placeholder="Enter first name"
-                    />
-                    <Field
-                        label="Last Name"
-                        name="lastName"
-                        component={renderInput}
-                        type="text"
-                        placeholder="Enter last name"
-                    />
-                    <Field
-                        label="Address"
-                        name="address"
-                        component={renderInput}
-                        type="text"
-                        placeholder="Enter address"
-                    />
-                    <Field
-                        label="Phone"
-                        name="phone"
-                        component={renderInput}
-                        type="text"
-                        placeholder="Enter phone"
-                    />
-                </div>
+                {visible ? (
+                    <Alert style={{ marginBottom: "1rem" }} message={initalValues.firstName + " " + initalValues.lastName + " Thanks for the order. Your pizza is ready for " + props.convertTime(initalValues.time) + " min."} type="success" closable afterClose={handleClose} />
+                ) : null}
             </div>
-            <div style={{ textAlign: "center" }}>
-                <Button type="primary" htmlType="submit">
-                    Order
-             </Button>
-                <Button type="button" onClick={() => {
-                    props.closeIngredientCard()
-                    props.reset()
-                }
-                }>
 
-                    Close Order
-                 </Button>
-            </div>
-        </form>
+            <form onSubmit={handleSubmit(onSubmitForm)}>
+                <div>
+
+                    <div>
+                        <div>
+                            <Field
+                                label="First Name"
+                                name="firstName"
+                                component={renderInput}
+                                type="text"
+                                placeholder="Enter first name"
+                            />
+                            <Field
+                                label="Last Name"
+                                name="lastName"
+                                component={renderInput}
+                                type="text"
+                                placeholder="Enter last name"
+                            />
+                            <Field
+                                label="Address"
+                                name="address"
+                                component={renderInput}
+                                type="text"
+                                placeholder="Enter address"
+                            />
+                            <Field
+                                label="Phone"
+                                name="phone"
+                                component={renderInput}
+                                type="text"
+                                placeholder="Enter phone"
+                            />
+                        </div>
+                    </div>
+                    <div style={{ textAlign: "center" }}>
+                        <Button type="primary" htmlType="submit">
+                            Order
+                         </Button>
+                        <Button type="button" onClick={() => {
+                            props.closeIngredientCard()
+                            props.reset()
+                        }
+                        }>
+                            Close Order
+                         </Button>
+                    </div>
+                </div>
+            </form>
+        </div >
     );
 };
 

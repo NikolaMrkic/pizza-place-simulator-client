@@ -5,7 +5,7 @@ import {
   Component,
 } from "../../../src/global";
 import AdminHeader from "../../components/admin/header/AdminHeader";
-import USER_ADMIN from "../../redux/actions/admin/userAction";
+// import USER_ADMIN from "../../redux/actions/admin/userAction";
 
 class AdminPage extends Component {
   state = {
@@ -47,8 +47,8 @@ const mapStateToProps = (state) => {
 // anything returned from this function will end up as props
 function mapDispatchToProps(dispatch) {
   return {
-    getAdminUsersAction: dispatch(USER_ADMIN.request()),
+    // getAdminUsersAction: dispatch(USER_ADMIN.request()),
   };
 }
 
-export default connect(null, null)(AdminPage);
+export default connect(mapDispatchToProps, mapStateToProps)(AdminPage);
