@@ -29,13 +29,11 @@ let LogIn = (props) => {
   const dispatch = useDispatch();
 
   let login = (values) => {
-    console.log(" singIn Received values of form: ", values);
     dispatch(USER.logIn(values));
     // history.replace(admin);
   };
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
   };
   const { handleSubmit } = props;
 

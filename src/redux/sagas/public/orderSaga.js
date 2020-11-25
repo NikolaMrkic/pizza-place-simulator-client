@@ -4,11 +4,8 @@ import { orderAction } from "../../actions/public/ordersAction";
 import { ORDER } from "../../actions/public/ordersAction/ordersActionTypes";
 
 function* handleGetOrders() {
-    console.log("DOVLACIMMMMMMMMMMMMMMMMMMMMMM ORDEREEE");
     try {
         const { data } = yield call(DataUtils.get, `/orders`);
-        console.log('data iz sage', data);
-        console.log("data from saga", data);
         yield put(orderAction.success({ data }));
     } catch (e) {
         yield put(orderAction.failure({ error: { ...e } }));
@@ -20,10 +17,8 @@ function* handlePostOrder(action) {
     try {
         const response = yield call(DataUtils.post, `/create-order`, order);
         const orderResponse = response.data.order;
-        console.log("response!!!!!!!!!!!", orderResponse)
         yield put(orderAction.recive({ orderResponse }));
     } catch (e) {
-        console.log("response!!!!!!!!!!! U catch")
         yield put(orderAction.failure({ error: { ...e } }));
     }
 }

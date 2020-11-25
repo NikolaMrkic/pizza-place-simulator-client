@@ -85,7 +85,6 @@ class HomePage extends Component {
                 <Divider orientation="center">Orders</Divider>
                 <List
                   bordered
-                  dataSource={data}
                   split>
                   {this.props.ordersArray.map((data, index) => {
                     return (
