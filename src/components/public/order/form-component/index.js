@@ -7,9 +7,9 @@ export const renderInput = (filed) => {
     return (
         <FormItem {...formItemLayout} label={filed.label}>
             <Input
-                autoComplete="nope"
-                autoCorrect="nope"
-                spellCheck="nope"
+                // autoComplete="nope"
+                // autoCorrect="nope"
+                // spellCheck="nope"
                 {...filed.input}
                 name={filed.input.name}
                 placeholder={filed.placeholder}

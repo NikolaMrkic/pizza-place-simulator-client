@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   //baseURL: apiUrl
-  baseURL: `http://127.0.0.1:3001`,
+  baseURL: `http://127.0.0.1:4000`,
 });
 
 const get = async function (url, options = {}) {
@@ -17,7 +17,6 @@ const get = async function (url, options = {}) {
     throw error.response;
   }
   const dataAndStatusForGet = { data: result.data, status: result.status };
-  console.log("GETTTT", dataAndStatusForGet);
   return dataAndStatusForGet;
 };
 
@@ -25,7 +24,6 @@ const post = async function (url, data, options = {}) {
   let result = [];
   await api.post(url, data, options).then((res) => (result = res));
   const dataAndStatusForPost = { data: result.data, status: result.status };
-  console.log("iz data utilsa", dataAndStatusForPost);
 
   // return result.data
   return dataAndStatusForPost;

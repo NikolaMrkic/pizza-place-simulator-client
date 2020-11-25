@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 class NoFoundPage extends Component {
   render() {

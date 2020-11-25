@@ -21,9 +21,10 @@ const PublicHeader = () => {
       />
       <Modal
         visible={isVisibleModal}
-        onOk={() => setIsVisibleModal(false)}
+        // onOk={() => setIsVisibleModal(false)}
         onCancel={() => setIsVisibleModal(false)}
         width={400}
+        footer={false}
       >
         <LogIn />
       </Modal>

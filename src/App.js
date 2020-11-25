@@ -10,6 +10,7 @@ import HomePage from "../src/pages/public/HomePage";
 import AdminPage from "../src/pages/admin/AdminPage";
 import LogIn from "./components/public/login/LogIn";
 import NoFoundPage from "../src/pages/public/NoFoundPage";
+import SingIn from "./components/public/singin/SingIn";
 
 export default function AuthExample() {
   return (
@@ -21,6 +22,10 @@ export default function AuthExample() {
           </Route>
           <Route path="/login">
             <LogIn />
+          </Route>
+
+          <Route path="/singin">
+            <SingIn />
           </Route>
 
           <PrivateRoute path="/admin">
