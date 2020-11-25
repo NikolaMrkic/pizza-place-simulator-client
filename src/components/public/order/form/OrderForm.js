@@ -8,17 +8,13 @@ import {
     // useHistory,
 } from "../../../../global";
 import { Alert } from 'antd';
-import { Divider } from 'antd';
 import { renderInput } from "../form-component/index";
 import ORDER from "../../../../redux/actions/public/ordersAction/index"
 let OrderForm = (props) => {
-    console.log('props sa forme', props);
     const [visible, setVisible] = useState(false);
     const [initalValues, setinitalValues] = useState({});
 
     const dispatch = useDispatch();
-    // let history = useHistory();
-    // console.log("props sa ordera", props);
     const onSubmitForm = (values) => {
         const order = { ...props.initalValues, ...values }
         setinitalValues(order);

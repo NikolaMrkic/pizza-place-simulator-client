@@ -7,14 +7,6 @@ import OrderForm from "../../components/public/order/form/OrderForm";
 
 const { Footer, Content } = Layout;
 
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
-
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -35,11 +27,8 @@ class HomePage extends Component {
 
 
   openPurchaseOrderCard = (data) => {
-    console.log('dataaaaaaaaaa', data);
     let millisec = data.time;
     let seconds = millisec / 1000.0;
-    console.log('seconds', seconds);
-    //proslediti sekunde za izradu pice
     let decPart = (seconds + "").split(".")[1];
 
     this.setState({
@@ -61,8 +50,6 @@ class HomePage extends Component {
 
   render() {
     if (this.props.ingredient) {
-      console.log('PROSP', this.props);
-
       const { isVisibleModal, ingredientPizza, pizzaName, pizzaTime, pizzaPrice } = this.state;
       return (
         <div >
@@ -150,14 +137,10 @@ class HomePage extends Component {
 
 // Map State To Props (Redux Store Passes State To Component)
 const mapStateToProps = (state) => {
-  console.log('state 1', state);
   const fethcSuccessIngredient = state.ingredient.success;
   const fethcSuccessOrders = state.ordersState.success;
   // Redux Store --> Component
   if (fethcSuccessIngredient && fethcSuccessOrders) {
-    console.log('state.ordersState', state.ordersState.data);
-    console.log('state.ingredient', state.ingredient.data);
-
     return {
       ingredient: state.ingredient.data,
       ordersArray: state.ordersState.data

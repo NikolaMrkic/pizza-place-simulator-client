@@ -26,29 +26,29 @@ class AdminPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log("GLOBALNI STATEEEEE", state);
+// const mapStateToProps = (state) => {
+//   console.log("GLOBALNI STATEEEEE", state);
 
-  const fetchingSuccess = state.adminUsers.success;
-  console.log("fetchingSuccess", fetchingSuccess);
-  // Redux Store --> Component
-  if (fetchingSuccess) {
-    const userAdminState = state;
-    console.log("userAdminState state", state);
-    return {
-      adminUsers: userAdminState.adminUsers,
-    };
-  }
-  return {
-    adminUsers: "",
-  };
-};
+//   const fetchingSuccess = state.adminUsers.success;
+//   console.log("fetchingSuccess", fetchingSuccess);
+//   // Redux Store --> Component
+//   if (fetchingSuccess) {
+//     const userAdminState = state;
+//     console.log("userAdminState state", state);
+//     return {
+//       adminUsers: userAdminState.adminUsers,
+//     };
+//   }
+//   return {
+//     adminUsers: "",
+//   };
+// };
 
-// anything returned from this function will end up as props
-function mapDispatchToProps(dispatch) {
-  return {
-    // getAdminUsersAction: dispatch(USER_ADMIN.request()),
-  };
-}
+// // anything returned from this function will end up as props
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     // getAdminUsersAction: dispatch(USER_ADMIN.request()),
+//   };
+// }
 
-export default connect(mapDispatchToProps, mapStateToProps)(AdminPage);
+export default connect(null, null)(AdminPage);

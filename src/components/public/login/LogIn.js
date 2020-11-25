@@ -1,108 +1,85 @@
 import {
   React,
-  Checkbox,
-  Form,
-  Input,
+  Field,
   Button,
-  Link,
   useHistory,
+  reduxForm,
   useLocation,
-  UserOutlined,
-  LockOutlined,
+  useDispatch
 } from "../../../global";
+import { renderInput } from "../order/form-component/index";
+import USER from "../../../redux/actions/public/userAction/index"
 
-const LogIn = () => {
-  const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-      fakeAuth.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-      fakeAuth.isAuthenticated = false;
-      setTimeout(cb, 100);
-    },
-  };
+
+let LogIn = (props) => {
+
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/admin" } };
+
+  let { admin } = location.state || { admin: { pathname: "/admin" } };
+  let { singin } = location.state || { singin: { pathname: "/singin" } };
+
 
   let history = useHistory();
-  let login = () => {
-    fakeAuth.authenticate(() => {
-      console.log(fakeAuth.isAuthenticated);
 
-      history.replace(from);
-    });
+  let singIn = () => {
+    history.replace(singin);
+  };
+
+
+  const dispatch = useDispatch();
+
+  let login = (values) => {
+    console.log(" singIn Received values of form: ", values);
+    dispatch(USER.logIn(values));
+    // history.replace(admin);
   };
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+  const { handleSubmit } = props;
 
   return (
     <div>
-      <p>Login to {from.pathname} page</p>
+      <p>Login to {admin.pathname} page</p>
+      <form onSubmit={handleSubmit(login)}>
+        <div>
 
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
-        <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
+          <div>
+            <div>
+              <Field
+                label="Email"
+                name="email"
+                component={renderInput}
+                type="text"
+                placeholder="Enter email"
+              />
+              <Field
+                label="Password"
+                name="password"
+                component={renderInput}
+                type="text"
+                placeholder="Enter password"
+              />
 
-          <Link className="login-form-forgot"> Forgot password</Link>
-        </Form.Item>
-
-        <Form.Item>
-          {/* <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
-          </Button> */}
-          <Button onClick={login} type="primary">
-            Log in
+            </div>
+          </div>
+          <Button type="primary" htmlType="submit">
+            login
+                         </Button>
+          <Button type="button" onClick={singIn}>
+            singIn
           </Button>
-          Or <Link>register now!</Link>
-        </Form.Item>
-      </Form>
+        </div>
+      </form>
     </div>
   );
 };
+// Important: connect only after calling reduxForm!!!
+
+LogIn = reduxForm({
+  form: "LogIn",
+})(LogIn);
+
 export default LogIn;
+
